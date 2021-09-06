@@ -1,15 +1,15 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, TouchableHighlight } from "react-native";
 
 const CategoryGridTitle = (props) => {
   return (
-    <TouchableOpacity style={styles.grid} onPress={props.onSelect}>
+    <TouchableHighlight style={styles.grid} onPress={props.onSelect}>
       <View
         style={{ ...styles.container, ...{ backgroundColor: props.color } }}
       >
         <Text style={styles.title} numberOfLines={2}>{props.title}</Text>
       </View>
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };
 

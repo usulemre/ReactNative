@@ -3,14 +3,16 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
-  ImageBackground
+  
+  TouchableWithoutFeedback,
+  ImageBackground,
+  
 } from 'react-native';
 
 const MealItem = props => {
   return (
     <View style={styles.mealItem}>
-      <TouchableOpacity onPress={props.onSelectMeal}>
+      <TouchableWithoutFeedback onPress={props.onSelectMeal}>
         <View>
           <View style={{ ...styles.mealRow, ...styles.mealHeader }}>
             <ImageBackground
@@ -30,7 +32,7 @@ const MealItem = props => {
             <Text>{props.affordability.toUpperCase()}</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     </View>
   );
 };
