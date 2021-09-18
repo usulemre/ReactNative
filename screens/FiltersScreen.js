@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch } from "react-redux";
 import HeaderButton from "../components/HeaderButton";
-
+import { setFilters } from "../store/actions/meals";
 const FilterSwich = (props) => {
   return (
     <View style={styles.filterConteiner}>
@@ -18,16 +19,18 @@ const FiltersScreen = (props) => {
   const [isVegan, setIsVegan] = useState(false);
   const [isVegetarian, setIsVegetarian] = useState(false);
 
+  const dispatch = useDispatch();
+
   const saveFilters = useCallback(() => {
     const appliedFilters = {
       glutenFree: isGlutenFree,
       lactoseFree: isLactoseFree,
       vegan: isVegan,
-      isVegetarian: isVegetarian
+      vegetarian: isVegetarian,
     };
 
-    console.log(appliedFilters);
-  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian]);
+    dispatch(setFilters(appliedFilters));
+  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian, dispatch]);
 
   useEffect(() => {
     props.navigation.setParams({ save: saveFilters });
@@ -38,22 +41,22 @@ const FiltersScreen = (props) => {
       <FilterSwich
         label="Gluten-free"
         state={isGlutenFree}
-        onChange={newValue => setIsGlutenFree(newValue)}
+        onChange={(newValue) => setIsGlutenFree(newValue)}
       />
       <FilterSwich
         label="Lactose-free"
         state={isLactoseFree}
-        onChange={newValue => setIsLactoseFree(newValue)}
+        onChange={(newValue) => setIsLactoseFree(newValue)}
       />
       <FilterSwich
         label="Vegan"
         state={isVegan}
-        onChange={newValue => setIsVegan(newValue)}
+        onChange={(newValue) => setIsVegan(newValue)}
       />
       <FilterSwich
         label="Vegetarian"
         state={isVegetarian}
-        onChange={newValue => setIsVegetarian(newValue)}
+        onChange={(newValue) => setIsVegetarian(newValue)}
       />
     </View>
   );
@@ -101,7 +104,7 @@ FiltersScreen.navigationOptions = (navData) => {
         <Item
           title="Save"
           iconName="ios-Save"
-          onPress={navData.navigation.getParam('save')}
+          onPress={navData.navigation.getParam("save")}
         />
       </HeaderButtons>
     ),

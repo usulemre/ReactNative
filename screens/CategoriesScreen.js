@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, FlatList, StatusBar } from "react-native";
+import {  FlatList } from "react-native";
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryGridTitle from "../components/CategoryGridTitle";
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';

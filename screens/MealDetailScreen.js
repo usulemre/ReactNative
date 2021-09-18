@@ -13,11 +13,15 @@ const ListItem = (props) => {
   );
 };
 const MealDetailScreen = (props) => {
-  const availableMeals = useSelector(state => state.meals.meals);
-  
-  const mealId = props.navigation.getParam('mealId');
+  const availableMeals = useSelector((state) => state.meals.meals);
 
-  const selectedMeal = availableMeals.find(meal => meal.id === mealId);
+  const mealId = props.navigation.getParam("mealId");
+
+  const currnmeals = useSelector((state) =>
+    state.meals.favoriteMeals.some((meal) => meal.id === mealId)
+  );
+
+  const selectedMeal = availableMeals.find((meal) => meal.id === mealId);
 
   const dispatch = useDispatch();
 
@@ -27,8 +31,12 @@ const MealDetailScreen = (props) => {
 
   useEffect(() => {
     // props.navigation.setParams({ mealTitle: selectedMeal.title });
-    props.navigation.setParams({toggleFav: toggleFavoriteHandler});
+    props.navigation.setParams({ toggleFav: toggleFavoriteHandler });
   }, [toggleFavoriteHandler]);
+
+  useEffect(() => {
+    props.navigation.setParams({ Fav: currnmeals });
+  }, [currnmeals]);
 
   return (
     <ScrollView>
@@ -52,8 +60,9 @@ const MealDetailScreen = (props) => {
 
 MealDetailScreen.navigationOptions = (navigationData) => {
   // const mealId = navigationData.navigation.getParam('mealId');
-  const mealTitle = navigationData.navigation.getParam('mealTitle');
-  const toggleFavorite = navigationData.navigation.getParam('toggleFav');
+  const mealTitle = navigationData.navigation.getParam("mealTitle");
+  const toggleFavorite = navigationData.navigation.getParam("toggleFav");
+  const isFav = navigationData.navigation.getParam("Fav");
   // const selectedMeal = MEALS.find(meal => meal.id === mealId);
   return {
     headerTitle: mealTitle,
@@ -61,11 +70,11 @@ MealDetailScreen.navigationOptions = (navigationData) => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Favorite"
-          iconName="ios-star"
+          iconName={isFav ? "ios-star" : "ios-star-outline"}
           onPress={toggleFavorite}
         />
       </HeaderButtons>
-    )
+    ),
   };
 };
 
